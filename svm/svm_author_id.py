@@ -38,9 +38,23 @@ clf.fit(features_train, labels_train)
 print "training time:", round(time()-t0, 3), "s"
 
 t1 = time()
-print accuracy_score(clf.predict(features_test), labels_test)
+print clf
+predict = clf.predict(features_test)
+print accuracy_score(predict, labels_test)
 print "prediction time:", round(time()-t1, 3), "s"
 
+print "Result for 10:", predict[10]
+print "Result for 26:", predict[26]
+print "Result for 50:", predict[50]
+
+counter = 0
+i = 0
+while i<len(predict):
+    if predict[i] == 1:
+        counter += 1
+    i += 1
+    
+print "Amount of E-Mails by Chris:", counter
 #########################################################
 
 
