@@ -53,10 +53,24 @@ poi  = "poi"
 features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
-i = 0    
-while i < len(finance_features):
-    print finance_features[i][0]
-    i += 1
+
+from sklearn import preprocessing
+
+salary, finance_features_ = targetFeatureSplit( finance_features )
+exercised_stock_options, total_payments = targetFeatureSplit( finance_features_ )
+salary_ = numpy.array(salary)
+exercised_stock_options_ = numpy.array(exercised_stock_options)
+total_payments_ = numpy.array(total_payments)
+
+min_max_scaler = preprocessing.MinMaxScaler()
+min_max_scaler2 = preprocessing.MinMaxScaler()
+min_max_scaler3 = preprocessing.MinMaxScaler()
+rescaled_salary = min_max_scaler.fit_transform(salary_)
+print min_max_scaler.transform([[200000.]])
+rescaled_stock_options = min_max_scaler2.fit_transform(exercised_stock_options_)
+print min_max_scaler2.transform([[1000000.]])
+rescaled_total_payments = min_max_scaler3.fit_transform(total_payments_)
+
 
 
 ### in the "clustering with 3 features" part of the mini-project,
@@ -71,7 +85,6 @@ plt.show()
 ### for the data and store them to a list called pred
 
 from sklearn import cluster
-from sklearn.metrics import accuracy_score
 
 clf = cluster.KMeans(n_clusters=2)
 clf.fit(finance_features)
